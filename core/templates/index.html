@@ -7,9 +7,17 @@
 {% block fixture_list %}
 
     <div id="fixture-list">
-        {% for fixture in fixtures %}
+        {% for fixture, prediction in fixtures_and_predictions %}
             <div class="prediction-container">
-            {{fixture.home_team}} - {{fixture.away_team}}
+            {{fixture.home_team}}
+            {% if prediction %}
+                <span>
+                    {{prediction.home_goals}} - {{prediction.away_goals}}
+                </span>
+            {% else %}
+                -
+            {% endif %}
+            {{fixture.away_team}}
         {% endfor %}
     </div>
 

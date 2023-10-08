@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 
 # Extend standard user model in case of future enhancements
 class User(AbstractUser):
@@ -23,6 +24,6 @@ class Fixture(models.Model):
 class Prediction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fixture = models.ForeignKey(Fixture, on_delete=models.CASCADE, related_name='predictions')
-    home_goals = models.IntegerField()
-    away_goals = models.IntegerField()
+    home_goals = models.IntegerField(validators=[MinValueValidator(0)])
+    away_goals = models.IntegerField(validators=[MinValueValidator(0)])
 
