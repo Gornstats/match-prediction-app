@@ -2,10 +2,17 @@
 
 {% block content %}
 
-{% for fixture in fixtures %}
+<h1>User Tipping</h1>
 
-    {{fixture.home_team}}
+{% block fixture_list %}
 
-{% endfor %}
+    <div id="fixture-list">
+        {% for fixture in fixtures %}
+            <div class="prediction-container">
+            {{fixture.home_team}} - {{fixture.away_team}}
+        {% endfor %}
+    </div>
+
+{% endblock %}
 
 {% endblock %}
