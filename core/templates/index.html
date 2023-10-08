@@ -2,6 +2,10 @@
 
 {% block content %}
 
-Hello
+{% for fixture in fixtures %}
+
+    {{fixture.home_team}}
+
+{% endfor %}
 
 {% endblock %}
