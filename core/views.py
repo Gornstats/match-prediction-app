@@ -44,3 +44,16 @@ def submit_prediction(request, fixture_pk):
     html = render_block_to_string('index.html', 'fixture_container', context)
     
     return HttpResponse(html)
+
+@login_required
+@require_POST
+def delete_prediction(request, prediction_pk):
+    prediction = get_object_or_404(Prediction, pk=prediction_pk)
+    fixture = prediction.fixture
+    # TODO: check if request.user is the user of the prediction
+    prediction.delete()
+    context = {
+        'prediction': None, 'fixture': fixture,
+    }
+    html = render_block_to_string('index.html', 'fixture_container', context)
+    return HttpResponse(html)

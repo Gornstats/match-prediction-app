@@ -9,32 +9,45 @@
     <div id="fixture-list">
         {% for fixture, prediction in fixtures_and_predictions %}
         {% block fixture_container %}
-
-            <div class="prediction-container" x-data="{editing: false}">
-            {{fixture.home_team}}
-
-            <span x-show="editing">
-                {% include 'partials/prediction_form.html' %}
-            </span>
-
-            {% if prediction %}
-                <span x-show="!editing">
-                    {{prediction.home_goals}} - {{prediction.away_goals}}
-                </span>
-            {% else %}
-                <span x-show="!editing">|</span>
-            {% endif %}
-            {{fixture.away_team}}
-
-            <span style="margin-left: 10px">
-                <button @click="editing = true" x-show="!editing">Tip</button>
-                <button @click="editing = false" x-show="editing">Cancel</button>
+            {# a single row from the fixture, with tips visible and able to be submitted #}
+            <div class="prediction-container" x-data="{editing: false, submittable: false}">
+            
+                {{fixture.home_team}}
 
                 <span x-show="editing">
-                    <button id="predict-fixture-{{fixture.pk}}">Submit</button>
+                    {% include 'partials/prediction_form.html' %}
                 </span>
-            </span>
-            <hr/>
+
+                {% if prediction %}
+                    <span x-show="!editing">
+                        {{prediction.home_goals}} - {{prediction.away_goals}}
+                    </span>
+                {% else %}
+                    <span x-show="!editing">|</span>
+                {% endif %}
+                
+                {{fixture.away_team}}
+
+                <span style="margin-left: 10px">
+                    <button @click="editing = true" x-show="!editing">Tip</button>
+                    <button @click="[editing=false,submittable=false]" x-show="editing">Cancel</button>
+
+                    <span x-show="submittable">
+                        <button id="predict-fixture-{{fixture.pk}}">Submit</button>
+                    </span>
+
+                    {% if prediction %}
+                        <button @click="editing=false" x-show="!editing" 
+                            hx-post="{% url 'delete-prediction' prediction.pk %}"
+                            hx-target="closest .prediction-container"
+                            hx-swap="outerHTML">
+                                Delete
+                        </button>
+                    {% endif %}
+                </span>
+                
+                <hr/>
+
             </div>
         {% endblock %}
         {% endfor %}
