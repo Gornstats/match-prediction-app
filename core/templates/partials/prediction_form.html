@@ -1,6 +1,8 @@
 {# Tipping form. Submission triggered when 'Submit' button is clicked for specific fixture entry #}
 
-<form style="display: inline;">
+<form style="display: inline;" 
+    hx-trigger="click from:#predict-fixture-{{fixture.pk}}" 
+    hx-post="{% url 'submit-prediction' fixture.pk %}">
     <input
         type="number" 
         min="0"
