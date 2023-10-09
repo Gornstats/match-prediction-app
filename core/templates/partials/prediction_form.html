@@ -2,7 +2,9 @@
 
 <form style="display: inline;" 
     hx-trigger="click from:#predict-fixture-{{fixture.pk}}" 
-    hx-post="{% url 'submit-prediction' fixture.pk %}">
+    hx-post="{% url 'submit-prediction' fixture.pk %}" 
+    hx-target="closest .prediction-container" 
+    hx-swap="outerHTML">
     <input
         type="number" 
         min="0"
