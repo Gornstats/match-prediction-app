@@ -27,6 +27,10 @@
             <span style="margin-left: 10px">
                 <button @click="editing = true" x-show="!editing">Tip</button>
                 <button @click="editing = false" x-show="editing">Cancel</button>
+
+                <span x-show="editing">
+                    <button id="predict-fixture-{{fixture.pk}}">Submit</button>
+                </span>
             </span>
             <hr/>
         {% endfor %}
